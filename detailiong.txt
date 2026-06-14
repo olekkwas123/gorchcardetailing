@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Groch Car Detailing</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f4f0;
+    --accent: #c8a96e;
+    --accent-light: #e8d5a8;
+    --gray: #2a2a2a;
+    --gray-mid: #666;
+    --gray-light: #aaa;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.25rem 3rem;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid rgba(200,169,110,0.2);
+  }
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+  }
+  .logo span { color: var(--white); }
+  nav ul { list-style: none; display: flex; gap: 2rem; }
+  nav a {
+    color: var(--gray-light); text-decoration: none;
+    font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 8rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 70% 40%, rgba(200,169,110,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-line {
+    width: 40px; height: 2px; background: var(--accent); margin-bottom: 1.5rem;
+  }
+  .hero-subtitle {
+    font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1rem;
+  }
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 10vw, 8rem);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    max-width: 700px;
+  }
+  h1 .highlight { color: var(--accent); display: block; }
+  .hero-desc {
+    margin-top: 2rem;
+    font-size: 1rem; font-weight: 300; line-height: 1.7;
+    color: var(--gray-light); max-width: 440px;
+  }
+  .hero-cta {
+    display: flex; gap: 1rem; margin-top: 3rem; align-items: center;
+  }
+  .btn-primary {
+    background: var(--accent); color: var(--black);
+    padding: 0.85rem 2rem; font-size: 0.8rem;
+    font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+    border: none; cursor: pointer; text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--accent-light); transform: translateY(-1px); }
+  .btn-ghost {
+    color: var(--gray-light); font-size: 0.8rem;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    text-decoration: none; display: flex; align-items: center; gap: 0.5rem;
+    transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--white); }
+  .arrow { font-size: 1rem; }
+
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 5rem;
+    padding-top: 2rem;
+    border-top: 0.5px solid rgba(255,255,255,0.1);
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem; color: var(--accent); line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gray-mid); margin-top: 0.25rem;
+  }
+
+  /* DIVIDER LINE */
+  .section-label {
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .section-label::after {
+    content: ''; flex: 1; height: 0.5px; background: rgba(200,169,110,0.3);
+    max-width: 80px;
+  }
+
+  /* SERVICES */
+  section { padding: 6rem 3rem; }
+  h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    letter-spacing: 0.04em; margin-bottom: 3rem;
+    line-height: 1;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1px;
+    background: rgba(255,255,255,0.06);
+  }
+  .service-card {
+    background: var(--black);
+    padding: 2.5rem 2rem;
+    transition: background 0.25s;
+    cursor: default;
+  }
+  .service-card:hover { background: var(--gray); }
+  .service-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem; color: rgba(200,169,110,0.15);
+    line-height: 1; margin-bottom: 1rem;
+  }
+  .service-title {
+    font-size: 1rem; font-weight: 500; margin-bottom: 0.75rem;
+  }
+  .service-desc {
+    font-size: 0.85rem; font-weight: 300; color: var(--gray-mid);
+    line-height: 1.6;
+  }
+  .service-price {
+    margin-top: 1.5rem; font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem; color: var(--accent); letter-spacing: 0.05em;
+  }
+
+  /* PROCESS */
+  #proces { background: #0e0e0e; }
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0;
+  }
+  .step {
+    padding: 2rem;
+    border-left: 0.5px solid rgba(255,255,255,0.08);
+    position: relative;
+  }
+  .step:first-child { border-left: none; }
+  .step-icon {
+    width: 40px; height: 40px;
+    border: 0.5px solid var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem;
+    color: var(--accent); margin-bottom: 1.25rem;
+  }
+  .step h3 { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.5rem; }
+  .step p { font-size: 0.8rem; color: var(--gray-mid); line-height: 1.6; font-weight: 300; }
+
+  /* GALLERY */
+  #realizacje { background: var(--black); }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    gap: 8px;
+  }
+  .gallery-item {
+    background: var(--gray);
+    aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gray-mid); font-size: 0.75rem; letter-spacing: 0.1em;
+    text-transform: uppercase; position: relative; overflow: hidden;
+    transition: transform 0.3s;
+  }
+  .gallery-item:hover { transform: scale(0.98); }
+  .gallery-item.big { grid-column: span 2; grid-row: span 1; }
+  .gallery-item::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(200,169,110,0.08), transparent);
+  }
+  .gallery-tag {
+    position: absolute; bottom: 1rem; left: 1rem;
+    background: rgba(10,10,10,0.8); color: var(--accent);
+    font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+  }
+
+  /* CONTACT */
+  #kontakt { background: #080808; }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+    align-items: start;
+  }
+  .contact-info p {
+    font-size: 0.9rem; font-weight: 300; color: var(--gray-mid);
+    line-height: 1.8; margin-bottom: 2rem;
+  }
+  .contact-detail {
+    display: flex; align-items: flex-start; gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+  .contact-detail-label {
+    font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--accent); min-width: 70px;
+  }
+  .contact-detail-val {
+    font-size: 0.9rem; color: var(--white); font-weight: 300;
+  }
+  .form-group { margin-bottom: 1.25rem; }
+  .form-group label {
+    display: block; font-size: 0.65rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--gray-mid); margin-bottom: 0.5rem;
+  }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%; background: var(--gray);
+    border: 0.5px solid rgba(255,255,255,0.08);
+    color: var(--white); padding: 0.85rem 1rem;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 300;
+    outline: none; transition: border-color 0.2s;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    border-color: var(--accent);
+  }
+  .form-group select { appearance: none; cursor: pointer; }
+  .form-group select option { background: var(--gray); }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 3rem;
+    border-top: 0.5px solid rgba(255,255,255,0.06);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer p { font-size: 0.75rem; color: var(--gray-mid); font-weight: 300; }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem;
+    color: var(--accent); letter-spacing: 0.1em;
+  }
+
+  @media (max-width: 700px) {
+    nav { padding: 1rem 1.5rem; }
+    nav ul { display: none; }
+    .hero { padding: 7rem 1.5rem 3rem; }
+    .hero-stats { gap: 1.5rem; }
+    section { padding: 4rem 1.5rem; }
+    .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-item.big { grid-column: span 1; }
+    footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Groch<span> Car Detailing</span></div>
+  <ul>
+    <li><a href="#uslugi">Usługi</a></li>
+    <li><a href="#proces">Proces</a></li>
+    <li><a href="#realizacje">Realizacje</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="start">
+  <div class="hero-bg"></div>
+  <div class="hero-line"></div>
+  <p class="hero-subtitle">Profesjonalny car detailing</p>
+  <h1>Twój Samochód<span class="highlight">Na Wysoki</span>Połysk.</h1>
+  <p class="hero-desc">Przywracamy blasku każdemu pojazdowi. Korekta lakieru, folia ochronna PPF, ceramiczne powłoki — efekty, które mówią same za siebie.</p>
+  <div class="hero-cta">
+    <a href="#kontakt" class="btn-primary">Umów termin</a>
+    <a href="#realizacje" class="btn-ghost">Realizacje <span class="arrow">→</span></a>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="stat-num">500+</div>
+      <div class="stat-label">Zadowolonych klientów</div>
+    </div>
+    <div>
+      <div class="stat-num">7</div>
+      <div class="stat-label">Lat doświadczenia</div>
+    </div>
+    <div>
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Profesjonalne produkty</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="uslugi">
+  <div class="section-label">Oferta</div>
+  <h2>Nasze Usługi</h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-title">Korekta Lakieru</div>
+      <div class="service-desc">Eliminacja rys, wiru, hologramów. Polerowanie jedno- i dwuetapowe maszyną rotacyjną.</div>
+      <div class="service-price">od 800 zł</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <div class="service-title">Powłoka Ceramiczna</div>
+      <div class="service-desc">Długoterminowa ochrona lakieru. Hydrofobowość, odporność na UV i chemię drogową.</div>
+      <div class="service-price">od 1200 zł</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <div class="service-title">Folia PPF</div>
+      <div class="service-desc">Przeźroczysta folia ochronna zabezpieczająca przed odpryskami, zarysowaniami i korozją.</div>
+      <div class="service-price">od 2500 zł</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <div class="service-title">Detailing Wnętrza</div>
+      <div class="service-desc">Pranie tapicerki, czyszczenie skóry, odświeżenie plastików — wnętrze jak z salonu.</div>
+      <div class="service-price">od 400 zł</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">05</div>
+      <div class="service-title">Mycie Detailingowe</div>
+      <div class="service-desc">Mycie bezkontaktowe, deironizacja, odsmołowanie, wosk lub quick detailer na finisz.</div>
+      <div class="service-price">od 200 zł</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">06</div>
+      <div class="service-title">Pakiet Premium</div>
+      <div class="service-desc">Pełen detailing — korekta lakieru + powłoka ceramiczna + detailing wnętrza w jednym.</div>
+      <div class="service-price">od 3500 zł</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="proces">
+  <div class="section-label">Jak pracujemy</div>
+  <h2>Nasz Proces</h2>
+  <div class="process-steps">
+    <div class="step">
+      <div class="step-icon">01</div>
+      <h3>Wycena & konsultacja</h3>
+      <p>Oceniamy stan pojazdu i doradzamy najlepsze rozwiązanie dla Twojego samochodu.</p>
+    </div>
+    <div class="step">
+      <div class="step-icon">02</div>
+      <h3>Dekontaminacja</h3>
+      <p>Dokładne mycie, usunięcie smoły, żelaza i wszelkich zanieczyszczeń z lakieru.</p>
+    </div>
+    <div class="step">
+      <div class="step-icon">03</div>
+      <h3>Korekta / ochrona</h3>
+      <p>Polerowanie lub nakładanie powłoki/folii zgodnie z ustalonym zakresem prac.</p>
+    </div>
+    <div class="step">
+      <div class="step-icon">04</div>
+      <h3>Kontrola jakości</h3>
+      <p>Szczegółowy odbiór w odpowiednim oświetleniu. Oddajemy auto tylko w 100% gotowe.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="realizacje">
+  <div class="section-label">Portfolio</div>
+  <h2>Realizacje</h2>
+  <div class="gallery-grid">
+    <div class="gallery-item big">
+      <!-- WSTAW ZDJĘCIE: zamień tę sekcję na <img src="zdjecie1.jpg" style="width:100%;height:100%;object-fit:cover;"> -->
+      <span>Twoje zdjęcie tutaj</span>
+      <span class="gallery-tag">Korekta lakieru + PPF</span>
+    </div>
+    <div class="gallery-item">
+      <span>Twoje zdjęcie tutaj</span>
+      <span class="gallery-tag">Powłoka ceramiczna</span>
+    </div>
+    <div class="gallery-item">
+      <span>Twoje zdjęcie tutaj</span>
+      <span class="gallery-tag">Wnętrze</span>
+    </div>
+    <div class="gallery-item big">
+      <span>Twoje zdjęcie tutaj</span>
+      <span class="gallery-tag">Detailing pełny</span>
+    </div>
+    <div class="gallery-item">
+      <span>Twoje zdjęcie tutaj</span>
+      <span class="gallery-tag">Mycie detailingowe</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="kontakt">
+  <div class="section-label">Kontakt</div>
+  <h2>Umów Termin</h2>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <p>Działamy na terenie całego regionu. Zapraszamy do kontaktu — odpiszemy lub oddzwonimy najszybciej jak to możliwe.</p>
+      <!-- ZMIEŃ: wstaw swoje dane kontaktowe poniżej -->
+      <div class="contact-detail">
+        <span class="contact-detail-label">Telefon</span>
+        <span class="contact-detail-val">+48 XXX XXX XXX</span>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-label">Email</span>
+        <span class="contact-detail-val">kontakt@grochdetailing.pl</span>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-label">Adres</span>
+        <span class="contact-detail-val">ul. Przykładowa 12, Twoje Miasto</span>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-label">Godziny</span>
+        <span class="contact-detail-val">Pon–Sob, 8:00–18:00</span>
+      </div>
+    </div>
+    <div>
+      <div class="form-group">
+        <label>Imię i nazwisko</label>
+        <input type="text" placeholder="Jan Kowalski">
+      </div>
+      <div class="form-group">
+        <label>Telefon</label>
+        <input type="tel" placeholder="+48 600 000 000">
+      </div>
+      <div class="form-group">
+        <label>Usługa</label>
+        <select>
+          <option value="">Wybierz usługę...</option>
+          <option>Korekta lakieru</option>
+          <option>Powłoka ceramiczna</option>
+          <option>Folia PPF</option>
+          <option>Detailing wnętrza</option>
+          <option>Mycie detailingowe</option>
+          <option>Pakiet Premium</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Wiadomość (opcjonalnie)</label>
+        <textarea placeholder="Opisz swój pojazd lub zapytaj o szczegóły..."></textarea>
+      </div>
+      <button class="btn-primary" style="width: 100%; padding: 1rem;" onclick="alert('Formularz wysłany! Skontaktujemy się wkrótce.')">Wyślij zapytanie</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Groch Car Detailing</div>
+  <p>© 2025 Groch Car Detailing. Wszelkie prawa zastrzeżone.</p>
+</footer>
+
+</body>
+</html>
